@@ -1,8 +1,9 @@
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
+const express = require('express')
+const app = express()
 
-app.use(bodyParser.json());
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.json())
 
 let notes = [
     {
@@ -24,23 +25,9 @@ let notes = [
         important: true
     }
 ]
+
 app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>')
-})
-
-app.get('/notes', (req, res) => {
-    res.json(notes)
-})
-
-app.get('/notes/:id', (request, response) => {
-    const id =Number(request.params.id)
-    const note = notes.find(note => note.id === id)
-    console.log("joo");
-    if (note) {
-        response.json(note)
-    } else {
-        response.status(404).end()
-    }
 })
 
 const generateId = () => {
@@ -71,7 +58,26 @@ app.post('/notes', (request, response) => {
     response.json(note)
 })
 
+app.get('/notes', (request, response) => {
+    response.json(notes)
+})
 
+app.get('/notes/:id', (request, response) => {
+    const id = Number(request.params.id)
+    const note = notes.find(note => note.id === id)
+    if (note) {
+        response.json(note)
+    } else {
+        response.status(404).end()
+    }
+})
+
+app.delete('/notes/:id', (request, response) => {
+    const id = Number(request.params.id)
+    notes = notes.filter(note => note.id !== id)
+
+    response.status(204).end()
+})
 
 const PORT = 3001
 app.listen(PORT, () => {
