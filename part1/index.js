@@ -1,9 +1,9 @@
 const express = require('express');
-const morgan = require("morgan")
+const morgan = require("morgan");
 const app = express();
-const cors = require('cors')
+const cors = require('cors');
 
-app.use(cors())
+app.use(cors());
 
 const bodyParser = require('body-parser');
 
@@ -108,9 +108,7 @@ const unknownEndpoint = (request, response) => {
     response.status(404).send({ error: 'unknown endpoint' })
 };
 
-
 app.use(unknownEndpoint);
-
 
 const PORT = 3001;
 app.listen(PORT, () => {
